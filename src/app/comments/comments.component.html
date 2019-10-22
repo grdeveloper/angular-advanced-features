@@ -1,0 +1,31 @@
+<ng-template #commentsForm>
+  <div class="comment-form">
+    <form novalidate [formGroup]="form" (ngSubmit)="submit(form, commentsForm)" #commentsForm>
+      <input type="text" formControlName="comment">
+      <button type="submit">Comment</button>
+    </form>
+  </div>
+</ng-template>
+
+<ng-container *ngIf="comments.length">
+  <ng-container *ngFor="let comment of comments; trackBy: trackByFn">
+    <div
+      class="comment-section"
+      data-id="{{comment.id}}"
+      [style.paddingLeft.px]="!comment.parentId ? 0 : findPadding(comment) * 20"
+    >
+      <div>{{comment.label}}</div>
+      <div class="actions">
+        <span (click)="openReply(comment.id)">Reply</span>
+        <span (click)="deleteComment(comment.id)">Delete</span>
+      </div>
+      <ng-container *ngIf="comment.open">
+        <ng-container *ngTemplateOutlet="commentsForm"></ng-container>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-container>
+
+<div class="comments-footer">
+  <ng-container *ngTemplateOutlet="commentsForm"></ng-container>
+</div>

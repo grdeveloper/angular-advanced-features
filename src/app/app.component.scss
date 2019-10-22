@@ -1,0 +1,61 @@
+// enforce the app content area container to take the entire available space
+.app-content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  // set the width size of the sidenave
+  mat-sidenav {
+    width: 350px;
+  }
+  // sets up the main content area as a flexbox container with a column direction
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    // uses flexbox to enforce the app toolbar is always present, even as the user scrolls down through content
+    .main-toolbar {
+      flex: 0 0 auto;
+      z-index: 999;
+    }
+    // uses flexbox to push the inner content area, where the router-outlet lives below the toolbar and grants
+    // it the rest of the available space with the ability to scroll
+    .main-content-inner {
+      flex: 1 1 auto;
+      position: relative; /* need this to position inner content */
+      overflow-y: auto;
+
+      .content-area {
+        padding: 15px 30px;
+      }
+    }
+  }
+}
+
+mat-list-item {
+  width: 100%;
+  transition: background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
+}
+
+[mat-icon-button] {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+:host:fullscreen {
+  display: block;
+  background: yellow;
+}
+
+:host:-webkit-full-screen {
+  display: block;
+  background: yellow;
+}
